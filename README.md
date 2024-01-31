@@ -34,7 +34,7 @@ Read the comments closely: they contain a few tips that will clarify certain pec
 
 - Install Firebase Tools globally `npm install -g firebase-tools`
 
-- In your terminal, navigate to the respository and to the `functions` directory to run: `npm run install`
+- In your terminal, navigate to the respository and to the `functions` directory to run: `npm install`
 
 - To start the API and the database emulator, sumply run `npm run conc`
     - To verify that the API started properly, in your browser go to the URL that is defined by:
