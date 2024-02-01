@@ -201,7 +201,23 @@ app.get("/users/:userId",
  * Use a JS date object
  * 
  */
+
+const quizSchema = Joi.object({
+  name: Joi.string()
+    .min(1)
+    .required(),
+  description: Joi.string()
+    .optional() // Optional...
+    .min(1), // but if present, cannot be an empty string.
+  active: Joi.boolean()
+    .default(false),
+  userCount: Joi.number()
+  .integer()
+  .default(0) // I am unsure if it would be better to handle this default in Joi validation or in the POST itself.
+});
+
 app.post("/quizzes",
+  buildValidator(quizSchema, "body"),
   asyncHandler(async (request, response, next) => {
 
     const quizRef: DocumentReference = await quizzesColl.add({
