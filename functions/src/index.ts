@@ -146,10 +146,19 @@ app.post("/users",
  */
 app.get("/users/:userId",
   asyncHandler(async (request, response, next) => {
+    const userId = request.params.userId; //Extract from the URL params
+    const userRef = usersColl.doc(userId);
+    const userDoc = await userRef.get();
 
-    // @TODO: IMPLEMENT ME
+    // We don't want to give random people our document! It contains a lot of weird internal stuff.
+    // What they really want is the document's data.
+    const userData = userDoc.data();
 
-    response.json("IMPLEMENT ME")
+    // By default, the data we get from the document does not include ID,
+    // so we'll explicitly add it here to match the expected response.
+    const userDataWithID = Object.assign({ id: userDoc.id }, userData)
+
+    response.json(userDataWithID); 
   })
 )
 
