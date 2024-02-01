@@ -204,9 +204,23 @@ app.get("/users/:userId",
 app.post("/quizzes",
   asyncHandler(async (request, response, next) => {
 
-    // @TODO: IMPLEMENT ME
+    const quizRef: DocumentReference = await quizzesColl.add({
+      name: request.body.name,
+      description: request.body.description, 
+      active: request.body.active,
+      // I prefer to set createdOn here, because Typescript does not like
+      // the fact that firestore's documentSnapshot's createTime could be null.
+      createdOn: new Date()
+    })
 
-    response.json("IMPLEMENT ME")
+    const quizDoc = await quizRef.get()
+
+    response.json({
+      quiz: {
+        id: quizDoc.id,
+        ...quizDoc.data(),
+      }
+    })
   })
 )
 
