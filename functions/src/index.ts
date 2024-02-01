@@ -150,15 +150,12 @@ app.get("/users/:userId",
     const userRef = usersColl.doc(userId);
     const userDoc = await userRef.get();
 
-    // We don't want to give random people our document! It contains a lot of weird internal stuff.
-    // What they really want is the document's data.
-    const userData = userDoc.data();
-
-    // By default, the data we get from the document does not include ID,
-    // so we'll explicitly add it here to match the expected response.
-    const userDataWithID = Object.assign({ id: userDoc.id }, userData)
-
-    response.json(userDataWithID); 
+    response.json({
+      user: {
+        id: userDoc.id,
+        ...userDoc.data()
+      }
+    })
   })
 )
 
