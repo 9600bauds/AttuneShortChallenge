@@ -259,10 +259,24 @@ app.post("/quizzes",
  */
 app.get("/quizzes",
   asyncHandler(async (request, response, next) => {
-    
-    // @TODO: IMPLEMENT ME
+    // This is a variable of type QuerySnapshot.
+    // https://firebase.google.com/docs/reference/node/firebase.firestore.QuerySnapshot
+    const quizzSnapshot = await quizzesColl.orderBy('createdOn', 'desc').limit(10).get();
 
-    response.json("IMPLEMENT ME")
+    if (quizzSnapshot.empty) {
+      response.json({ quizzes: [] });
+      return;
+    }
+
+    // Converting the snapshot (which is a list of doc type objects) to an array of plain ol' JSON object
+    const quizzes = quizzSnapshot.docs.map(quizDoc => ({
+      // Is it proper to simply repeat the procedure of adding the ID manually whenever a quiz is returned?
+      // Surely there must be a better way...
+      id: quizDoc.id,
+      ...quizDoc.data()
+    }));
+
+    response.json({ quizzes });
   })
 )
 
