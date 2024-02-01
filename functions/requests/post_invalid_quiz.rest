@@ -1,0 +1,8 @@
+POST http://127.0.0.1:5001/challenge-project/us-central1/api/quizzes
+content-type: application/json
+
+ {
+  "name": "Bad Quiz",
+  "description": "",
+  "active": false
+ }
