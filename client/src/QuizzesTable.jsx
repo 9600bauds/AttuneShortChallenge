@@ -27,9 +27,9 @@ const QuizzesTable = () => {
   if (!quizzes) return <p>Loading quizzes...</p>; // Check if quizzes is null
 
   return (
-    <div>
+    <div className="container mt-4">
       <h2>Quizzes</h2>
-      <table>
+      <table className="table table-striped">
         <thead>
           <tr>
             <th>Name</th>
