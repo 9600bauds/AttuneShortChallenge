@@ -205,9 +205,7 @@ app.post("/quizzes",
   asyncHandler(async (request, response, next) => {
 
     const quizRef: DocumentReference = await quizzesColl.add({
-      name: request.body.name,
-      description: request.body.description, 
-      active: request.body.active,
+      ...request.body, // Is spread syntax appropriate here? I assume Joi makes sure the body is OK and safe.
       // I prefer to set createdOn here, because Typescript does not like
       // the fact that firestore's documentSnapshot's createTime could be null.
       createdOn: new Date()
